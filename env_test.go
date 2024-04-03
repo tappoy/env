@@ -1,4 +1,4 @@
-// Test main.go
+// Test env.go
 
 package env
 
