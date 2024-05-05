@@ -9,7 +9,7 @@ VARIABLES
 var (
 	// DummyEnv is the map that stores dummy values for the environment variable.
 	// This is used for testing.
-	DummyEnv = map[string]string{}
+	DummyEnv = make(Env)
 
 	// Exit is the function that calls os.Exit normally.
 	// If you want test, you can replace this function with a mock function.
@@ -46,4 +46,10 @@ func GetenvInt(key string, defaultValue int) (int, error)
     it is searched by os.Getenv. Finally, if the value is not found, it returns
     the defaultValue. If the value is not a number, it returns the defaultValue
     and an error.
+
+
+TYPES
+
+type Env map[string]string
+    Env is the type that represents the environment variables.
 

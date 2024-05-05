@@ -7,10 +7,13 @@ import (
 	"strconv"
 )
 
+// Env is the type that represents the environment variables.
+type Env map[string]string
+
 var (
 	// DummyEnv is the map that stores dummy values for the environment variable.
 	// This is used for testing.
-	DummyEnv = map[string]string{}
+	DummyEnv = make(Env)
 
 	// Exit is the function that calls os.Exit normally.
 	// If you want test, you can replace this function with a mock function.
