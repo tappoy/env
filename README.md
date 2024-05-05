@@ -1,12 +1,10 @@
-# About
-This module provies convinient functions to access the environment variables.
+# Package
+`github.com/tappoy/env`
 
-# Functions
-- GetEnvString(key string, defaultValue string) string
-- GetEnvInt(key string, defaultValue int) int
+See [Document.txt](Document.txt)
 
-# LICENSE
-This module is licensed under the LGPL-3.0 license. For more information, see the LICENSE file.
+# License
+[LGPL-3.0](LICENSE)
 
-# AUTHOR
+# Author
 [tappoy](https://github.com/tappoy)

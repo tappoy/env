@@ -3,76 +3,75 @@
 package env
 
 import (
-  "os"
-  "testing"
+	"os"
+	"testing"
 )
 
-func TestGetEnvString(t *testing.T) {
-  os.Setenv("TEST_KEY", "test_value")
-  value := GetEnvString("TEST_KEY", "default_value")
-  if value != "test_value" {
-    t.Errorf("GetEnvString() = %s; want test_value", value)
-  }
+func TestGetenv(t *testing.T) {
+	os.Setenv("TEST_KEY", "test_value")
+	value := Getenv("TEST_KEY", "default_value")
+	if value != "test_value" {
+		t.Errorf("Getenv() = %s; want test_value", value)
+	}
 }
 
-func TestGetEnvStringWithDefaultValue(t *testing.T) {
-  os.Setenv("TEST_KEY", "")
-  value := GetEnvString("TEST_KEY", "default_value")
-  if value != "default_value" {
-    t.Errorf("GetEnvString() = %s; want default_value", value)
-  }
+func TestGetenvWithDefaultValue(t *testing.T) {
+	os.Setenv("TEST_KEY", "")
+	value := Getenv("TEST_KEY", "default_value")
+	if value != "default_value" {
+		t.Errorf("Getenv() = %s; want default_value", value)
+	}
 }
 
-func TestGetEnvInt(t *testing.T) {
-  os.Setenv("TEST_KEY", "100")
-  value := GetEnvInt("TEST_KEY", 0)
-  if value != 100 {
-    t.Errorf("GetEnvInt() = %d; want 100", value)
-  }
+func TestGetenvInt(t *testing.T) {
+	os.Setenv("TEST_KEY", "100")
+	value, _ := GetenvInt("TEST_KEY", 0)
+	if value != 100 {
+		t.Errorf("GetenvInt() = %d; want 100", value)
+	}
 }
 
-func TestGetEnvIntWithDefaultValue(t *testing.T) {
-  os.Setenv("TEST_KEY", "")
-  value := GetEnvInt("TEST_KEY", 0)
-  if value != 0 {
-    t.Errorf("GetEnvInt() = %d; want 0", value)
-  }
+func TestGetenvIntWithDefaultValue(t *testing.T) {
+	os.Setenv("TEST_KEY", "")
+	value, _ := GetenvInt("TEST_KEY", 0)
+	if value != 0 {
+		t.Errorf("GetenvInt() = %d; want 0", value)
+	}
 }
 
-func TestGetEnvIntWithInvalidValue(t *testing.T) {
-  os.Setenv("TEST_KEY", "invalid")
-  value := GetEnvInt("TEST_KEY", 0)
-  if value != 0 {
-    t.Errorf("GetEnvInt() = %d; want 0", value)
-  }
+func TestGetenvIntWithInvalidValue(t *testing.T) {
+	os.Setenv("TEST_KEY", "invalid")
+	value, err := GetenvInt("TEST_KEY", 123)
+	if err == nil {
+		t.Errorf("GetenvInt() = %d; want error", value)
+	}
+	if value != 123 {
+		t.Errorf("GetenvInt() = %d; want 123", value)
+	}
 }
 
-func TestGetEnvIntWithEmptyValue(t *testing.T) {
-  value := GetEnvInt("TEST_KEY", 0)
-  if value != 0 {
-    t.Errorf("GetEnvInt() = %d; want 0", value)
-  }
+func TestGetenvIntWithEmptyValue(t *testing.T) {
+	os.Setenv("TEST_KEY", "")
+	value, _ := GetenvInt("TEST_KEY", 123)
+	if value != 123 {
+		t.Errorf("GetenvInt() = %d; want 123", value)
+	}
 }
 
-func TestGetEnvIntWithNegativeValue(t *testing.T) {
-  os.Setenv("TEST_KEY", "-100")
-  value := GetEnvInt("TEST_KEY", 0)
-  if value != -100 {
-    t.Errorf("GetEnvInt() = %d; want -100", value)
-  }
+func TestGetenvWithDummyEnv(t *testing.T) {
+	DummyEnv["TEST_KEY"] = "1st"
+	os.Setenv("TEST_KEY", "2nd")
+	value := Getenv("TEST_KEY", "3rd")
+	if value != "1st" {
+		t.Errorf("Getenv() = %s; want dummy_value", value)
+	}
 }
 
-func TestGetEnvIntWithNegativeDefaultValue(t *testing.T) {
-  value := GetEnvInt("TEST_KEY", -100)
-  if value != -100 {
-    t.Errorf("GetEnvInt() = %d; want -100", value)
-  }
-}
-
-func TestGetEnvIntWithNegativeInvalidValue(t *testing.T) {
-  os.Setenv("TEST_KEY", "invalid")
-  value := GetEnvInt("TEST_KEY", -100)
-  if value != -100 {
-    t.Errorf("GetEnvInt() = %d; want -100", value)
-  }
+func TestGetenvIntWithDummyEnv(t *testing.T) {
+	DummyEnv["TEST_KEY"] = "1"
+	os.Setenv("TEST_KEY", "2")
+	value, _ := GetenvInt("TEST_KEY", 3)
+	if value != 1 {
+		t.Errorf("GetenvInt() = %d; want 1", value)
+	}
 }
