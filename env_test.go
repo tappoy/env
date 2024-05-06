@@ -3,6 +3,7 @@
 package env
 
 import (
+	"bytes"
 	"os"
 	"testing"
 )
@@ -73,5 +74,23 @@ func TestGetenvIntWithDummyEnv(t *testing.T) {
 	value, _ := GetenvInt("TEST_KEY", 3)
 	if value != 1 {
 		t.Errorf("GetenvInt() = %d; want 1", value)
+	}
+}
+
+func TestOutf(t *testing.T) {
+	// set Out to bytes.Buffer
+	Out = new(bytes.Buffer)
+	Outf("test %s\n", "message")
+	if Out.(*bytes.Buffer).String() != "test message\n" {
+		t.Errorf("got<%s> want<test message>", Out.(*bytes.Buffer).String())
+	}
+}
+
+func TestErrf(t *testing.T) {
+	// set Err to bytes.Buffer
+	Err = new(bytes.Buffer)
+	Errf("test %s\n", "message")
+	if Err.(*bytes.Buffer).String() != "test message\n" {
+		t.Errorf("got<%s> want<test message>", Err.(*bytes.Buffer).String())
 	}
 }
