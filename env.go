@@ -3,6 +3,8 @@
 package env
 
 import (
+	"fmt"
+	"io"
 	"os"
 	"strconv"
 )
@@ -19,17 +21,17 @@ var (
 	// If you want test, you can replace this function with a mock function.
 	Exit = os.Exit
 
-	// Out is the variable that stores the output of os.Stdout.
+	// Out is the io.Writer. Default is os.Stdout.
 	// If you want test, you can replace this variable with a mock variable.
-	Out = os.Stdout
+	Out = io.Writer(os.Stdout)
 
-	// Err is the variable that stores the output of os.Stderr.
+	// Err is the io.Writer. Default is os.Stderr.
 	// If you want test, you can replace this variable with a mock variable.
-	Err = os.Stderr
+	Err = io.Writer(os.Stderr)
 
-	// In is the variable that stores the input of os.Stdin.
+	// In is the io.Reader. Default is os.Stdin.
 	// If you want test, you can replace this variable with a mock variable.
-	In = os.Stdin
+	In = io.Reader(os.Stdin)
 
 	// Args is the variable that stores the arguments of os.Args.
 	// If you want test, you can replace this variable with a mock variable.
@@ -65,4 +67,14 @@ func GetenvInt(key string, defaultValue int) (int, error) {
 		return defaultValue, err
 	}
 	return intValue, nil
+}
+
+// Outf is the function that outputs the formatted string to env.Out.
+func Outf(format string, a ...any) {
+	fmt.Fprintf(Out, format, a...)
+}
+
+// Errf is the function that outputs the formatted string to env.Err.
+func Errf(format string, a ...any) {
+	fmt.Fprintf(Err, format, a...)
 }
