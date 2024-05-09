@@ -34,8 +34,17 @@ var (
 
 FUNCTIONS
 
+func Debug(format string, args ...any)
+    Debug is used to log debug message
+
 func Errf(format string, a ...any)
     Errf is the function that outputs the formatted string to env.Err.
+
+func Error(format string, args ...any)
+    Error is used to log error message
+
+func GetLogDir() string
+    GetLogDir is used to get log directory
 
 func Getenv(key string, defaultValue string) string
     Getenv is the function that returns the value of the environment variable
@@ -50,8 +59,25 @@ func GetenvInt(key string, defaultValue int) (int, error)
     the defaultValue. If the value is not a number, it returns the defaultValue
     and an error.
 
+func Info(format string, args ...any)
+    Info is used to log info message
+
+func IsSetLogger() bool
+    IsSetLogger is used to check if logger is set
+
+func Notice(format string, args ...any)
+    Notice is used to log notice message
+
 func Outf(format string, a ...any)
     Outf is the function that outputs the formatted string to env.Out.
+
+func SetLogger(logDir string) error
+    SetLogger is used to set logger More info: See
+    https://github.com/tappoy/logger
+
+    Errors:
+      - logger.ErrCannotCreateLogDir
+      - logger.ErrCannotWriteLogFile
 
 
 TYPES
