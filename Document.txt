@@ -31,8 +31,18 @@ var (
 	// If you want test, you can replace this variable with a mock variable.
 	Args = os.Args
 )
+var (
+	// The input process is interrupted.
+	ErrInterrupted = errors.New("ErrInterrupted")
+
+	// The dummy password to generate ErrInterrupted.
+	Interrupt = "Interrupt"
+)
 
 FUNCTIONS
+
+func ClearDummyPassword()
+    ClearDummyPassword is used to clear the dummy password for testing.
 
 func Debug(format string, args ...any)
     Debug is used to log debug message
@@ -62,6 +72,20 @@ func GetenvInt(key string, defaultValue int) (int, error)
 func Info(format string, args ...any)
     Info is used to log info message
 
+func InputPassword() (string, error)
+    InputPassword reads a password from the terminal. If the input is not from
+    the terminal, it will read from the Env.In. If the dummy password is set,
+    it will return the dummy password. If the dummy password is Interrupt,
+    it will return ErrInterrupted.
+
+    Errors:
+      - ErrInterrupted
+
+    See:
+      - SetDummyPassword
+      - ClearDummyPassword
+      - Interrupt
+
 func IsSetLogger() bool
     IsSetLogger is used to check if logger is set
 
@@ -70,6 +94,9 @@ func Notice(format string, args ...any)
 
 func Outf(format string, a ...any)
     Outf is the function that outputs the formatted string to env.Out.
+
+func SetDummyPassword(pw string)
+    SetDummyPassword is used to set the dummy password for testing.
 
 func SetLogger(logDir string) error
     SetLogger is used to set logger More info: See
