@@ -15,6 +15,18 @@ var (
 	// If you want test, you can replace this function with a mock function.
 	Exit = os.Exit
 
+	// Args is the variable that stores the arguments of os.Args.
+	// If you want test, you can replace this variable with a mock variable.
+	Args = os.Args
+)
+var (
+	// The input process is interrupted.
+	ErrInterrupted = errors.New("ErrInterrupted")
+
+	// The dummy password to generate ErrInterrupted.
+	Interrupt = "Interrupt"
+)
+var (
 	// Out is the io.Writer. Default is os.Stdout.
 	// If you want test, you can replace this variable with a mock variable.
 	Out = io.Writer(os.Stdout)
@@ -26,17 +38,6 @@ var (
 	// In is the io.Reader. Default is os.Stdin.
 	// If you want test, you can replace this variable with a mock variable.
 	In = io.Reader(os.Stdin)
-
-	// Args is the variable that stores the arguments of os.Args.
-	// If you want test, you can replace this variable with a mock variable.
-	Args = os.Args
-)
-var (
-	// The input process is interrupted.
-	ErrInterrupted = errors.New("ErrInterrupted")
-
-	// The dummy password to generate ErrInterrupted.
-	Interrupt = "Interrupt"
 )
 
 FUNCTIONS
