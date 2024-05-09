@@ -1,5 +1,10 @@
-// This module provides the ability to retrieve environment variables with default values and types.
-// It also provides the ability to set dummy values for ease of testing.
+// This module provides the testable mock functions and variables for the environment variables. You can replace the functions and variables for testing.
+//
+// Providing mocks are:
+//   - Environment variables
+//   - Stdout, Stderr, and Stdin
+//   - Exit and Args
+//   - Password input function
 package env
 
 import (
