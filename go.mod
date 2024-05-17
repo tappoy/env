@@ -1,6 +1,6 @@
 module github.com/tappoy/env
 
-go 1.22.2
+go 1.22.3
 
 require (
 	github.com/tappoy/logger v1.9.0
