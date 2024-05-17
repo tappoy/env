@@ -1,13 +1,15 @@
-WORKING_DIRS=tmp
-SRC=$(shell find . -name "*.go")
+PACKAGE=github.com/tappoy/env
+WORKING_DIRS=tmp bin
+
+SRC=*.go
 BIN=tmp/$(shell basename $(CURDIR))
-FMT=tmp/fmt
 TEST=tmp/cover
 DOC=Document.txt
+COVER0=tmp/cover0
 
-.PHONY: all clean cover test
+.PHONY: all clean fmt cover test lint
 
-all: $(WORKING_DIRS) $(FMT) $(BIN) $(TEST) $(DOC)
+all: $(WORKING_DIRS) fmt $(BIN) test $(DOC) lint
 
 clean:
 	rm -rf $(WORKING_DIRS)
@@ -15,8 +17,8 @@ clean:
 $(WORKING_DIRS):
 	mkdir -p $(WORKING_DIRS)
 
-$(FMT): $(SRC)
-	go fmt ./... > $(FMT) 2>&1 || true
+fmt: $(SRC)
+	go fmt ./...
 
 go.sum: go.mod
 	go mod tidy
@@ -24,14 +26,14 @@ go.sum: go.mod
 $(BIN): $(SRC) go.sum
 	go build -o $(BIN)
 
-$(TEST): $(BIN)
-	make test
+test: $(BIN)
+	go test -v -tags=mock -vet=all -cover -coverprofile=$(COVER)
 
 $(DOC): $(SRC)
 	go doc -all . > $(DOC)
 
 cover: $(TEST)
-	grep "0$$" $(TEST) || true
+	grep "0$$" $(COVER) | sed 's!$(PACKAGE)!.!' | tee $(COVER0)
 
-test:
-	go test -v -tags=mock -cover -coverprofile=$(TEST) ./...
+lint: $(BIN)
+	go vet
