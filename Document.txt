@@ -51,16 +51,32 @@ func ClearDummyPassword()
     ClearDummyPassword is used to clear the dummy password for testing.
 
 func Debug(format string, args ...any)
-    Debug is used to log debug message
+    Debug is used to log debug message.
+
+func EDebug(format string, args ...any)
+    EDebug is used to log debug message and output to stderr. "\n" will be added
+    to the end of the format.
+
+func EError(format string, args ...any)
+    EError is used to log error message and output to stderr. "\n" will be added
+    to the end of the format.
+
+func EInfo(format string, args ...any)
+    EInfo is used to log info message and output to stderr. "\n" will be added
+    to the end of the format.
+
+func ENotice(format string, args ...any)
+    ENotice is used to log notice message and output to stderr. "\n" will be
+    added to the end of the format.
 
 func Errf(format string, a ...any)
     Errf is the function that outputs the formatted string to env.Err.
 
 func Error(format string, args ...any)
-    Error is used to log error message
+    Error is used to log error message.
 
 func GetLogDir() string
-    GetLogDir is used to get log directory
+    GetLogDir is used to get log directory.
 
 func Getenv(key string, defaultValue string) string
     Getenv is the function that returns the value of the environment variable
@@ -76,7 +92,7 @@ func GetenvInt(key string, defaultValue int) (int, error)
     and an error.
 
 func Info(format string, args ...any)
-    Info is used to log info message
+    Info is used to log info message.
 
 func InputPassword() (string, error)
     InputPassword reads a password from the terminal. If the input is not from
@@ -93,10 +109,10 @@ func InputPassword() (string, error)
       - Interrupt
 
 func IsSetLogger() bool
-    IsSetLogger is used to check if logger is set
+    IsSetLogger is used to check if logger is set.
 
 func Notice(format string, args ...any)
-    Notice is used to log notice message
+    Notice is used to log notice message.
 
 func Outf(format string, a ...any)
     Outf is the function that outputs the formatted string to env.Out.

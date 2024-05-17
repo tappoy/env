@@ -19,28 +19,12 @@ func SetLogger(logDir string) error {
 	return nil
 }
 
-// IsSetLogger is used to check if logger is set
+// IsSetLogger is used to check if logger is set.
 func IsSetLogger() bool {
 	return log != nil
 }
 
-// Debug is used to log debug message
-func Debug(format string, args ...any) {
-	if log == nil {
-		return
-	}
-	log.Debug(format, args...)
-}
-
-// Error is used to log error message
-func Error(format string, args ...any) {
-	if log == nil {
-		return
-	}
-	log.Error(format, args...)
-}
-
-// GetLogDir is used to get log directory
+// GetLogDir is used to get log directory.
 func GetLogDir() string {
 	if log == nil {
 		return ""
@@ -48,7 +32,37 @@ func GetLogDir() string {
 	return log.GetLogDir()
 }
 
-// Info is used to log info message
+// Debug is used to log debug message.
+func Debug(format string, args ...any) {
+	if log == nil {
+		return
+	}
+	log.Debug(format, args...)
+}
+
+// EDebug is used to log debug message and output to stderr.
+// "\n" will be added to the end of the format.
+func EDebug(format string, args ...any) {
+	Errf(format+"\n", args...)
+	Debug(format, args...)
+}
+
+// Error is used to log error message.
+func Error(format string, args ...any) {
+	if log == nil {
+		return
+	}
+	log.Error(format, args...)
+}
+
+// EError is used to log error message and output to stderr.
+// "\n" will be added to the end of the format.
+func EError(format string, args ...any) {
+	Errf(format+"\n", args...)
+	Error(format, args...)
+}
+
+// Info is used to log info message.
 func Info(format string, args ...any) {
 	if log == nil {
 		return
@@ -56,10 +70,24 @@ func Info(format string, args ...any) {
 	log.Info(format, args...)
 }
 
-// Notice is used to log notice message
+// EInfo is used to log info message and output to stderr.
+// "\n" will be added to the end of the format.
+func EInfo(format string, args ...any) {
+	Errf(format+"\n", args...)
+	Info(format, args...)
+}
+
+// Notice is used to log notice message.
 func Notice(format string, args ...any) {
 	if log == nil {
 		return
 	}
 	log.Notice(format, args...)
+}
+
+// ENotice is used to log notice message and output to stderr.
+// "\n" will be added to the end of the format.
+func ENotice(format string, args ...any) {
+	Errf(format+"\n", args...)
+	Notice(format, args...)
 }
