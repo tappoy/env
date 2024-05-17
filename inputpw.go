@@ -21,10 +21,11 @@ var (
 
 var dummyPassword *string
 
-// InputPassword reads a password from the terminal.
-// If the input is not from the terminal, it will read from the Env.In.
+// InputPassword reads a password.
 // If the dummy password is set, it will return the dummy password.
-// If the dummy password is Interrupt, it will return ErrInterrupted.
+// If the dummy password is "Interrupt", it will return ErrInterrupted.
+// If the dummy password is not set and the input is not from the terminal, it will read from the Env.In.
+// Finally, it will read from the terminal.
 //
 // Errors:
 //   - ErrInterrupted
