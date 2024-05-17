@@ -22,9 +22,10 @@ func TestESeries(t *testing.T) {
 	Err = buff
 
 	// EDebug("debug") with no debug.log
+	SetDebug(true)
 	EDebug("debug")
 	str := buff.String()
-	if str != "debug\n" {
+	if str != "DEBUG: debug\n" {
 		t.Error(str)
 	}
 	_, err = os.Stat("tmp/log/debug.log")
@@ -41,7 +42,7 @@ func TestESeries(t *testing.T) {
 	defer os.Remove("tmp/log/debug.log")
 	EDebug("debug")
 	str = buff.String()
-	if str != "debug\n" {
+	if str != "DEBUG: debug\n" {
 		t.Error(str)
 	}
 	_, err = os.Stat("tmp/log/debug.log")

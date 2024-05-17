@@ -32,6 +32,14 @@ func GetLogDir() string {
 	return log.GetLogDir()
 }
 
+var isDebug = false
+
+// SetDebug is used to set debug mode.
+// If debug mode is enabled, debug message will be output to env.Err with "DEBUG: " prefix in EDegug function.
+func SetDebug(debug bool) {
+	isDebug = debug
+}
+
 // Debug is used to log debug message.
 func Debug(format string, args ...any) {
 	if log == nil {
@@ -43,7 +51,9 @@ func Debug(format string, args ...any) {
 // EDebug is used to log debug message and output to stderr.
 // "\n" will be added to the end of the format.
 func EDebug(format string, args ...any) {
-	Errf(format+"\n", args...)
+	if isDebug {
+		Errf("DEBUG: "+format+"\n", args...)
+	}
 	Debug(format, args...)
 }
 

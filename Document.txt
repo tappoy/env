@@ -118,6 +118,10 @@ func Notice(format string, args ...any)
 func Outf(format string, a ...any)
     Outf is the function that outputs the formatted string to env.Out.
 
+func SetDebug(debug bool)
+    SetDebug is used to set debug mode. If debug mode is enabled, debug message
+    will be output to env.Err with "DEBUG: " prefix in EDegug function.
+
 func SetDummyPassword(pw string)
     SetDummyPassword is used to set the dummy password for testing.
 
