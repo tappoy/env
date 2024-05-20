@@ -94,3 +94,17 @@ func TestErrf(t *testing.T) {
 		t.Errorf("got<%s> want<test message>", Err.(*bytes.Buffer).String())
 	}
 }
+
+func TestHostname(t *testing.T) {
+	// set DummyEnv
+	SetenvDummy("HOST", "testhost")
+	host := Hostname("default_host")
+	if host != "testhost" {
+		t.Errorf("Hostname() = %s; want testhost", host)
+	}
+
+	// example of os.Hostname
+	SetenvDummy("HOST", "")
+	host = Hostname("default_host")
+	t.Log(host)
+}
