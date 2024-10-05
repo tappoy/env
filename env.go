@@ -48,7 +48,7 @@ func SetenvDummy(key, value string) {
 	DummyEnv[key] = value
 }
 
-// Getenv is the function that returns the value of the environment variable as a int.
+// GetenvInt is the function that returns the value of the environment variable as a int.
 // The value is searched in the DummyEnv first, and if it is not found, it is searched by os.Getenv.
 // Finally, if the value is not found, it returns the defaultValue.
 // If the value is not a number, it returns the defaultValue and an error.
@@ -64,6 +64,24 @@ func GetenvInt(key string, defaultValue int) (int, error) {
 		return defaultValue, err
 	}
 	return intValue, nil
+}
+
+// GetenvBool is the function that returns the value of the environment variable as a bool.
+// The value is searched in the DummyEnv first, and if it is not found, it is searched by os.Getenv.
+// Finally, if the value is not found, it returns the defaultValue.
+// If the value is not a number, it returns the defaultValue and an error.
+func GetenvBool(key string, defaultValue bool) (bool, error) {
+	var value string
+	if DummyEnv[key] != "" {
+		value = DummyEnv[key]
+	} else if value = os.Getenv(key); value == "" {
+		return defaultValue, nil
+	}
+	boolValue, err := strconv.ParseBool(value)
+	if err != nil {
+		return defaultValue, err
+	}
+	return boolValue, nil
 }
 
 // Hostname is the function that returns the hostname of the machine.

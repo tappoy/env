@@ -8,6 +8,7 @@ import (
 	"testing"
 )
 
+// Getenv
 func TestGetenv(t *testing.T) {
 	os.Setenv("TEST_KEY", "test_value")
 	value := Getenv("TEST_KEY", "default_value")
@@ -24,6 +25,16 @@ func TestGetenvWithDefaultValue(t *testing.T) {
 	}
 }
 
+func TestGetenvWithDummyEnv(t *testing.T) {
+	DummyEnv["TEST_KEY"] = "1st"
+	os.Setenv("TEST_KEY", "2nd")
+	value := Getenv("TEST_KEY", "3rd")
+	if value != "1st" {
+		t.Errorf("Getenv() = %s; want dummy_value", value)
+	}
+}
+
+// GetenvInt
 func TestGetenvInt(t *testing.T) {
 	os.Setenv("TEST_KEY", "100")
 	value, _ := GetenvInt("TEST_KEY", 0)
@@ -51,23 +62,6 @@ func TestGetenvIntWithInvalidValue(t *testing.T) {
 	}
 }
 
-func TestGetenvIntWithEmptyValue(t *testing.T) {
-	os.Setenv("TEST_KEY", "")
-	value, _ := GetenvInt("TEST_KEY", 123)
-	if value != 123 {
-		t.Errorf("GetenvInt() = %d; want 123", value)
-	}
-}
-
-func TestGetenvWithDummyEnv(t *testing.T) {
-	DummyEnv["TEST_KEY"] = "1st"
-	os.Setenv("TEST_KEY", "2nd")
-	value := Getenv("TEST_KEY", "3rd")
-	if value != "1st" {
-		t.Errorf("Getenv() = %s; want dummy_value", value)
-	}
-}
-
 func TestGetenvIntWithDummyEnv(t *testing.T) {
 	DummyEnv["TEST_KEY"] = "1"
 	os.Setenv("TEST_KEY", "2")
@@ -77,6 +71,44 @@ func TestGetenvIntWithDummyEnv(t *testing.T) {
 	}
 }
 
+// GetenvBool
+func TestGetenvBool(t *testing.T) {
+	os.Setenv("TEST_KEY", "true")
+	value, _ := GetenvBool("TEST_KEY", false)
+	if value != true {
+		t.Errorf("GetenvBool() = %v; want true", value)
+	}
+}
+
+func TestGetenvBoolWithDefaultValue(t *testing.T) {
+	os.Setenv("TEST_KEY", "")
+	value, _ := GetenvBool("TEST_KEY", true)
+	if value != true {
+		t.Errorf("GetenvBool() = %v; want true", value)
+	}
+}
+
+func TestGetenvBoolWithInvalidValue(t *testing.T) {
+	os.Setenv("TEST_KEY", "invalid")
+	value, err := GetenvBool("TEST_KEY", true)
+	if err == nil {
+		t.Errorf("GetenvBool() = %v; want error", value)
+	}
+	if value != true {
+		t.Errorf("GetenvBool() = %v; want true", value)
+	}
+}
+
+func TestGetenvBoolWithDummyEnv(t *testing.T) {
+	DummyEnv["TEST_KEY"] = "true"
+	os.Setenv("TEST_KEY", "false")
+	value, _ := GetenvBool("TEST_KEY", false)
+	if value != true {
+		t.Errorf("GetenvBool() = %v; want true", value)
+	}
+}
+
+// Outf, Errf
 func TestOutf(t *testing.T) {
 	// set Out to bytes.Buffer
 	Out = new(bytes.Buffer)
@@ -95,6 +127,7 @@ func TestErrf(t *testing.T) {
 	}
 }
 
+// Hostname
 func TestHostname(t *testing.T) {
 	// set DummyEnv
 	SetenvDummy("HOST", "testhost")

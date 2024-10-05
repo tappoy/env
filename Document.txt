@@ -84,12 +84,19 @@ func Getenv(key string, defaultValue string) string
     found, it is searched by os.Getenv. Finally, if the value is not found,
     it returns the defaultValue.
 
+func GetenvBool(key string, defaultValue bool) (bool, error)
+    GetenvBool is the function that returns the value of the environment
+    variable as a bool. The value is searched in the DummyEnv first, and if
+    it is not found, it is searched by os.Getenv. Finally, if the value is not
+    found, it returns the defaultValue. If the value is not a number, it returns
+    the defaultValue and an error.
+
 func GetenvInt(key string, defaultValue int) (int, error)
-    Getenv is the function that returns the value of the environment variable as
-    a int. The value is searched in the DummyEnv first, and if it is not found,
-    it is searched by os.Getenv. Finally, if the value is not found, it returns
-    the defaultValue. If the value is not a number, it returns the defaultValue
-    and an error.
+    GetenvInt is the function that returns the value of the environment variable
+    as a int. The value is searched in the DummyEnv first, and if it is not
+    found, it is searched by os.Getenv. Finally, if the value is not found,
+    it returns the defaultValue. If the value is not a number, it returns the
+    defaultValue and an error.
 
 func Hostname(defaultHost string) string
     Hostname is the function that returns the hostname of the machine. The value
