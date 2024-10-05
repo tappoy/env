@@ -75,6 +75,9 @@ func Errf(format string, a ...any)
 func Error(format string, args ...any)
     Error is used to log error message.
 
+func GetDebug() bool
+    GetDebug is used to get debug mode.
+
 func GetLogDir() string
     GetLogDir is used to get log directory.
 

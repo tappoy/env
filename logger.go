@@ -40,6 +40,11 @@ func SetDebug(debug bool) {
 	isDebug = debug
 }
 
+// GetDebug is used to get debug mode.
+func GetDebug() bool {
+	return isDebug
+}
+
 // Debug is used to log debug message.
 func Debug(format string, args ...any) {
 	if log == nil {
