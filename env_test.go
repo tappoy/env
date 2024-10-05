@@ -8,8 +8,13 @@ import (
 	"testing"
 )
 
+func initDummyEnv() {
+	SetenvDummy("TEST_KEY", "")
+}
+
 // Getenv
 func TestGetenv(t *testing.T) {
+	initDummyEnv()
 	os.Setenv("TEST_KEY", "test_value")
 	value := Getenv("TEST_KEY", "default_value")
 	if value != "test_value" {
@@ -18,6 +23,7 @@ func TestGetenv(t *testing.T) {
 }
 
 func TestGetenvWithDefaultValue(t *testing.T) {
+	initDummyEnv()
 	os.Setenv("TEST_KEY", "")
 	value := Getenv("TEST_KEY", "default_value")
 	if value != "default_value" {
@@ -26,7 +32,8 @@ func TestGetenvWithDefaultValue(t *testing.T) {
 }
 
 func TestGetenvWithDummyEnv(t *testing.T) {
-	DummyEnv["TEST_KEY"] = "1st"
+	initDummyEnv()
+	SetenvDummy("TEST_KEY", "1st")
 	os.Setenv("TEST_KEY", "2nd")
 	value := Getenv("TEST_KEY", "3rd")
 	if value != "1st" {
@@ -36,14 +43,19 @@ func TestGetenvWithDummyEnv(t *testing.T) {
 
 // GetenvInt
 func TestGetenvInt(t *testing.T) {
+	initDummyEnv()
 	os.Setenv("TEST_KEY", "100")
-	value, _ := GetenvInt("TEST_KEY", 0)
+	value, err := GetenvInt("TEST_KEY", 0)
+	if err != nil {
+		t.Errorf("GetenvInt() = %v; value: %v, want 100", err, value)
+	}
 	if value != 100 {
 		t.Errorf("GetenvInt() = %d; want 100", value)
 	}
 }
 
 func TestGetenvIntWithDefaultValue(t *testing.T) {
+	initDummyEnv()
 	os.Setenv("TEST_KEY", "")
 	value, _ := GetenvInt("TEST_KEY", 0)
 	if value != 0 {
@@ -52,6 +64,7 @@ func TestGetenvIntWithDefaultValue(t *testing.T) {
 }
 
 func TestGetenvIntWithInvalidValue(t *testing.T) {
+	initDummyEnv()
 	os.Setenv("TEST_KEY", "invalid")
 	value, err := GetenvInt("TEST_KEY", 123)
 	if err == nil {
@@ -63,7 +76,8 @@ func TestGetenvIntWithInvalidValue(t *testing.T) {
 }
 
 func TestGetenvIntWithDummyEnv(t *testing.T) {
-	DummyEnv["TEST_KEY"] = "1"
+	initDummyEnv()
+	SetenvDummy("TEST_KEY", "1")
 	os.Setenv("TEST_KEY", "2")
 	value, _ := GetenvInt("TEST_KEY", 3)
 	if value != 1 {
@@ -73,6 +87,7 @@ func TestGetenvIntWithDummyEnv(t *testing.T) {
 
 // GetenvBool
 func TestGetenvBool(t *testing.T) {
+	initDummyEnv()
 	os.Setenv("TEST_KEY", "true")
 	value, _ := GetenvBool("TEST_KEY", false)
 	if value != true {
@@ -81,6 +96,7 @@ func TestGetenvBool(t *testing.T) {
 }
 
 func TestGetenvBoolWithDefaultValue(t *testing.T) {
+	initDummyEnv()
 	os.Setenv("TEST_KEY", "")
 	value, _ := GetenvBool("TEST_KEY", true)
 	if value != true {
@@ -89,6 +105,7 @@ func TestGetenvBoolWithDefaultValue(t *testing.T) {
 }
 
 func TestGetenvBoolWithInvalidValue(t *testing.T) {
+	initDummyEnv()
 	os.Setenv("TEST_KEY", "invalid")
 	value, err := GetenvBool("TEST_KEY", true)
 	if err == nil {
@@ -100,7 +117,8 @@ func TestGetenvBoolWithInvalidValue(t *testing.T) {
 }
 
 func TestGetenvBoolWithDummyEnv(t *testing.T) {
-	DummyEnv["TEST_KEY"] = "true"
+	initDummyEnv()
+	SetenvDummy("TEST_KEY", "true")
 	os.Setenv("TEST_KEY", "false")
 	value, _ := GetenvBool("TEST_KEY", false)
 	if value != true {
@@ -110,6 +128,7 @@ func TestGetenvBoolWithDummyEnv(t *testing.T) {
 
 // Outf, Errf
 func TestOutf(t *testing.T) {
+	initDummyEnv()
 	// set Out to bytes.Buffer
 	Out = new(bytes.Buffer)
 	Outf("test %s\n", "message")
@@ -119,6 +138,7 @@ func TestOutf(t *testing.T) {
 }
 
 func TestErrf(t *testing.T) {
+	initDummyEnv()
 	// set Err to bytes.Buffer
 	Err = new(bytes.Buffer)
 	Errf("test %s\n", "message")
@@ -129,6 +149,7 @@ func TestErrf(t *testing.T) {
 
 // Hostname
 func TestHostname(t *testing.T) {
+	initDummyEnv()
 	// set DummyEnv
 	SetenvDummy("HOST", "testhost")
 	host := Hostname("default_host")
